@@ -1,0 +1,2072 @@
+(************** Content-type: application/mathematica **************
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     51607,       1635]*)
+(*NotebookOutlinePosition[     52450,       1664]*)
+(*  CellTagsIndexPosition[     52406,       1660]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+  StyleBox["Calendrica\n",
+    FontColor->RGBColor[0.500008, 0.500008, 1]],
+  StyleBox["The Millennium Edition",
+    FontSize->18]
+}], "Title",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell["by Nachum Dershowitz and Edward M. Reingold", "Subtitle",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[TextData[{
+  StyleBox["Mathematica",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontSize->18,
+    FontSlant->"Italic"],
+  StyleBox[" translation version 2.0 by Robert C. McNally ",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontSize->18],
+  StyleBox["<calendrica@dangerousgames.com>",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontSize->18,
+    FontSlant->"Italic"]
+}], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[TextData[{
+  StyleBox["Calendrica is a package for generalized manipulation and \
+conversion of dates through various modern and historical calendars. It is \
+based on the work of Nachum Dershowitz and Edward M. Reingold in their book ",
+    
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  ButtonBox["Calendrical Calculations",
+    ButtonData:>{
+      URL[ "http://www.calendarists.com"], None},
+    ButtonStyle->"Hyperlink"],
+  StyleBox[", the Millennium Edition, published by Cambridge University \
+Press.",
+    Evaluatable->False,
+    AspectRatioFixed->True]
+}], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Version Notes", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell["2.0 (20 March 2000)", "Subsection"],
+
+Cell["\<\
+Calendrica 2.0 has beeen completely updated to conform with \
+Calendrical Calculations, the Millennium Edition. This includes such \
+additions as support for Egyptian, Armenian, Roman, Islamic Observational, \
+Arithmetic Persian, and Balinese calendars, as well as many improvements and \
+bug fixes over the previous version. Most functions are compatible with \
+Calendrica 1.0, but compatibilty is not guaranteed.\
+\>", "Text"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["License", "Section"],
+
+Cell["\<\
+;;;; The Functions (code, comments, and definitions) contained in \
+this
+;;;; file (the \"Program\") were written by Edward M. Reingold and Nachum
+;;;; Dershowitz (the \"Authors\"), who retain all rights to them except as
+;;;; granted in the License and subject to the warranty and liability
+;;;; limitations below.  These Functions are explained in the Authors'
+;;;; book, \"Calendrical Calculations: The Millennium Edition\" (Cambridge
+;;;; University Press, 2001), and are subject to an international
+;;;; copyright and a Patent Pending on certain functions.
+;;;;
+;;;; The Authors' public service intent is more liberal than suggested
+;;;; by the License below, as are their licensing policies for otherwise
+;;;; nonallowed uses such as--without limitation--those in commercial,
+;;;; web-site, and large-scale academic contexts.  Please see the
+;;;; web-site
+;;;;
+;;;;     http://www.calendarists.com
+;;;;
+;;;; for all uses not authorized below; in case there is cause for doubt
+;;;; about whether a use you contemplate is authorized, please contact
+;;;; the Authors (e-mail: reingold@cs.uiuc.edu).  For commercial
+;;;; licensing information, contact the first author at the Department
+;;;; of Computer Science, 1304 West Springfield Avenue, University of
+;;;; Illinois at Urbana-Champaign, Urbana, IL 61801-2987, USA.
+;;;;
+;;;; 1. LICENSE.  The Authors grant you a license for personal use only.
+;;;; This means that for strictly personal use you may copy and use the
+;;;; code, and keep a backup or archival copy also.  Any other uses,
+;;;; including without limitation, allowing the code or its output to be
+;;;; accessed, used, or available to others, is not permitted.
+;;;;
+;;;; 2. WARRANTY.
+;;;;
+;;;; (a) THE AUTHORS PROVIDE NO WARRANTIES OF ANY KIND, EITHER
+;;;;     EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITING THE
+;;;;     GENERALITY OF THE FOREGOING, ANY IMPLIED WARRANTY OF
+;;;;     MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+;;;;
+;;;; (b) THE AUTHORS SHALL NOT BE LIABLE TO YOU OR ANY THIRD PARTIES
+;;;;     FOR DAMAGES OF ANY KIND, INCLUDING WITHOUT LIMITATION, ANY LOST
+;;;;     PROFITS, LOST SAVINGS, OR ANY OTHER INCIDENTAL OR CONSEQUENTIAL
+;;;;     DAMAGES ARISING OUT OF OR RELATED TO THE USE, INABILITY TO USE,
+;;;;     OR INACCURACY OF CALCULATIONS, OF THE CODE AND FUNCTIONS
+;;;;     CONTAINED HEREIN, OR THE BREACH OF ANY EXPRESS OR IMPLIED
+;;;;     WARRANTY, EVEN IF THE AUTHORS OR PUBLISHER HAVE BEEN ADVISED OF
+;;;;     THE POSSIBILITY OF THOSE DAMAGES.
+;;;;
+;;;; (c) THE FOREGOING WARRANTY MAY GIVE YOU SPECIFIC LEGAL
+;;;;     RIGHTS WHICH MAY VARY FROM STATE TO STATE IN THE U.S.A.
+;;;;
+;;;; 3. LIMITATION OF LICENSEE REMEDIES.  You acknowledge and agree that
+;;;; your exclusive remedy (in law or in equity), and Authors' entire
+;;;; liability with respect to the material herein, for any breach of
+;;;; representation or for any inaccuracy shall be a refund of the license
+;;;; fee or service and handling charge which you paid the Authors, if any.
+;;;;
+;;;; SOME STATES IN THE U.S.A. DO NOT ALLOW THE EXCLUSION OR LIMITATION OF
+;;;; LIABILITY FOR INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE ABOVE
+;;;; EXCLUSIONS OR LIMITATION MAY NOT APPLY TO YOU.
+;;;;
+;;;; 4. DISCLAIMER.  Except as expressly set forth above, the Authors:
+;;;;
+;;;;   (a) make no other warranties with respect to the material in the
+;;;;   Program and expressly disclaim any others;
+;;;;
+;;;;   (b) do not warrant that the material contained in the Program will
+;;;;   meet your requirements or that their operation shall be
+;;;;   uninterrupted or error-free;
+;;;;
+;;;;   (c) license this material on an \"as is\" basis, and the entire risk
+;;;;   as to the quality, accuracy, and performance of the Program is
+;;;;   yours, should the code prove defective (except as expressly
+;;;;   warranted herein).  You alone assume the entire cost of all
+;;;;   necessary corrections.
+;;;;
+;;;; Sample values for the functions (useful for debugging) are given in
+;;;; Appendix C of the book and on the accompanying CD.\
+\>", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Naming Conventions", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[TextData[{
+  StyleBox["The conversion between most names in the Lisp implementation and \
+the ",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["Mathematica",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontSlant->"Italic"],
+  StyleBox[" implementation is straightforward: intercapitalization is \
+substituted for hyphenated names, and predicates end with \"Q\" instead of \
+\"?\". For example, ",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["no-major-solar-term?",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontWeight->"Bold"],
+  StyleBox[" becomes ",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["NoMajorSolarTermQ[]",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontWeight->"Bold"],
+  StyleBox[".\n\nThe only major changes are:\n\n1) Functions which convert to \
+and from fixed dates have overloaded names. For example, ",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["fixed-from-chinese",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontWeight->"Bold"],
+  StyleBox[" becomes ",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["ToFixed[]",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontWeight->"Bold"],
+  StyleBox[" which takes a Chinese date, and chinese-from-fixed becomes ",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["Chinese[]",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontWeight->"Bold"],
+  StyleBox[" which takes an integer.\n\n2) Components of dates are accessed \
+by functions such as ",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["CYear[]",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontWeight->"Bold"],
+  StyleBox[" which determine the position of the component from the type of \
+the date, and replace Lisp functions such as ",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["standard-year",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontWeight->"Bold"],
+  StyleBox[".\n\n3) Certain internal functions such as ",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["sum",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontWeight->"Bold"],
+  StyleBox[" have been renamed (",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["MSum[]",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontWeight->"Bold"],
+  StyleBox[", in this case) to avoid conflicts with already-established ",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["Mathematica",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontSlant->"Italic"],
+  StyleBox[" names.",
+    Evaluatable->False,
+    AspectRatioFixed->True]
+}], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Getting Started", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[TextData[{
+  StyleBox["Once you have placed the file \"Calendrica.m\" in the root of \
+your ",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["Mathematica",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontSlant->"Italic"],
+  StyleBox[" packages hierarchy, this loads it for use: ",
+    Evaluatable->False,
+    AspectRatioFixed->True]
+}], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \(<< Calendrica`\)], "Input",
+  AspectRatioFixed->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Looking at Global Symbols", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell["\<\
+This shows you all the symbols which Calendrica exports to the \
+global namespace:\
+\>", "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?Calendrica`*\)\)], "Input",
+  AspectRatioFixed->True],
+
+Cell["\<\
+Aberration                      HinduLunarOnOrBeforeQ
+AdjustedMod                     HinduLunarPhase
+Advent                          HinduNewMoonBefore
+AltFixedFromGregorian           HinduSiderealMonth
+AltGregorianFromFixed           HinduSiderealYear
+AltGregorianYearFromFixed       HinduSine
+AltHinduSunrise                 HinduSineTable
+AltOrthodoxEaster               HinduSolar
+Angle                           HinduSolarEra
+ApparentFromLocal               HinduSolarLongitude
+April                           HinduSolarLongitudeAfter
+ArcCosDegrees                   HinduSolarOnOrBeforeQ
+ArcSinDegrees                   HinduSunrise
+ArcTanDegrees                   HinduSynodicMonth
+ArithmeticPersian               HinduTropicalLongitude
+ArithmeticPersianLeapYearQ      HinduZodiac
+ArithmeticPersianYearFromFixed  Hr
+Armenian                        Ides
+ArmenianEpoch                   IdesOfMonth
+AryaJovianPeriod                IndependenceDay
+AryaLunarDay                    Islamic
+AryaLunarMonth                  IslamicEpoch
+AryaSolarMonth                  IslamicInGregorian
+AryaSolarYear                   IslamicLeapYearQ
+AscensionalDifference           IslamicLocale
+ASCII                           ISO
+Asr                             J2000
+AstronomicalEaster              January
+August                          JapaneseLocation
+Autumn                          JDEpoch
+AyyamIHa                        JDFromFixed
+Bahai                           JDFromMoment
+BahaiEpoch                      Jerusalem
+BahaiNewYear                    JewishDusk
+BaliAsatawaraFromFixed          JewishMorningEnd
+BaliCaturwaraFromFixed          JewishSabbathEnds
+BaliDasawaraFromFixed           JovianYear
+BaliDay                         Julian
+BaliDayFromFixed                JulianCenturies
+BaliDwiwaraFromFixed            JulianEpoch
+BaliEpoch                       JulianInGregorian
+BaliLuangFromFixed              JulianLeapYearQ
+Balinese                        July
+BaliOnOrBefore                  June
+BaliPancawaraFromFixed          KajengKeliwonInGregorian
+BaliSadwaraFromFixed            Kalends
+BaliSangawaraFromFixed          Karana
+BaliSaptawaraFromFixed          KDayAfter
+BaliTriwaraFromFixed            KDayBefore
+BaliWeek                        KDayNearest
+BaliWeekFromFixed               KDayOnOrAfter
+BCE                             KDayOnOrBefore
+Beijing                         LaborDay
+BinarySearch                    LastDayOfHebrewMonth
+BirkathHaHama                   LastKDay
+Bogus                           LastMonthOfHebrewYear
+Cairo                           LastQuarter
+Calendars                       LocalFromApparent
+Calendrica                      LocalFromStandard
+CalendricaTest                  LocalFromUniversal
+CAsatawara                      Location
+CBaktun                         LongMarheshvanQ
+CCaturwara                      LosAngeles
+CCount                          LunarAltitude
+CCycle                          LunarDay
+CDasawara                       LunarDayAfter
+CDay                            LunarLatitude
+CDwiwara                        LunarLongitude
+CE                              LunarPhase
+CElevation                      LunarPhaseAfter
+CEvent                          LunarPhaseBefore
+Chinese                         LunarStation
+ChineseAge                      MajorSolarTermOnOrAfter
+ChineseBranch                   March
+ChineseDayNameEpoch             MawlidAnNabi
+ChineseDayNameOnOrBefore        May
+ChineseEpoch                    MayanCalendarRoundOnOrBefore
+ChineseLocation                 MayanEpoch
+ChineseMonthNameEpoch           MayanHaab
+ChineseName                     MayanHaabEpoch
+ChineseNameDifference           MayanHaabOnOrBefore
+ChineseNameOfDay                MayanHaabOrdinal
+ChineseNameOfMonth              MayanLongCount
+ChineseNameOfYear               MayanTzolkin
+ChineseNewMoonBefore            MayanTzolkinEpoch
+ChineseNewMoonOnOrAfter         MayanTzolkinOnOrBefore
+ChineseNewYear                  MayanTzolkinOrdinal
+ChineseNewYearInSui             MDirection
+ChineseNewYearOnOrBefore        MeanPosition
+ChineseSexagesimalName          MeanSynodicMonth
+ChineseSolarLongitudeOnOrAfter  MeanTropicalYear
+ChineseStem                     Mecca
+ChineseWinterSolsticeOnOrBefore MemorialDay
+CHour                           MeshaSamkranti
+Christmas                       MFinal
+CKatun                          Midday
+CKin                            MiddayInTehran
+ClassicalPassoverEve            Midnight
+CLatitude                       MidnightInChina
+CLeapDay                        MidnightInParis
+CLeapMonth                      MinorSolarTermOnOrAfter
+CLongitude                      MJDEpoch
+CLuang                          MJDFromFixed
+CMajor                          MNext
+CMinute                         ModifiedFrench
+CMonth                          ModifiedFrenchLeapYearQ
+                                Molad
+CName                           MomentFromDepression
+CNumber                         MomentFromJD
+ConvertDateTo                   Monday
+Coptic                          MonthNames
+CopticChristmas                 MSum
+CopticEpoch                     Mt
+CopticInGregorian               NameFromDayOfWeek
+CopticLeapYearQ                 NameFromMonth
+CosDegrees                      NameFromNumber
+CPancawara                      NawRuz
+CPlaceName                      New
+CSadwara                        NewMoonAfter
+CSangawara                      NewMoonBefore
+CSaptawara                      Nisan
+CSecond                         NoMajorSolarTermQ
+CTriwara                        Nones
+CTun                            NonesOfMonth
+CUinal                          November
+CurrentDate                     NthKDay
+CurrentMajorSolarTerm           NthNewMoon
+CurrentMinorSolarTerm           Nutation
+CurrentMoment                   Obliquity
+CWeek                           ObservationalIslamic
+CYear                           October
+CZone                           OldHinduLunar
+DailyMotion                     OldHinduLunarLeapYearQ
+DateDifference                  OldHinduSolar
+Dawn                            Omer
+DaylightSavingEnd               OrthodoxEaster
+DaylightSavingStart             Paris
+DayNumber                       Passover
+DayOfWeekFromFixed              Pentecost
+DayOfWeekNames                  Persian
+DaysInHebrewYear                PersianEpoch
+DaysRemaining                   PersianNewYearOnOrBefore
+December                        PhasisOnOrBefore
+Deg                             Poly
+Degrees                         PositionsInInterval
+DegreesToRadians                PriorLeapMonthQ
+DragonFestival                  Purim
+Dusk                            QingMing
+DynamicalFromUniversal          RadiansToDegrees
+Easter                          RisingSign
+EasternOrthodoxChristmas        Roman
+Egyptian                        SacredWednesdays
+EgyptianEpoch                   SacredWednesdaysInGregorian
+ElectionDay                     Saturday
+EphemerisCorrection             September
+Epiphany                        ShEla
+EquationOfTime                  ShortKislevQ
+EstimatePriorSolarLongitude     SiderealFromMoment
+Ethiopic                        Sigma
+EthiopicEpoch                   SinDegrees
+FeastOfRidvan                   SolarLongitude
+February                        SolarLongitudeAfter
+FirstKDay                       SolarSiderealDifference
+FirstQuarter                    Spring
+FixedFromJD                     StandardFromLocal
+FixedFromMJD                    StandardFromSundial
+French                          StandardFromUniversal
+FrenchEpoch                     Summer
+FrenchNewYearOnOrBefore         Sunday
+Friday                          Sunrise
+Full                            Sunset
+FutureBahai                     SunsetInHaifa
+FutureBahaiNewYearOnOrBefore    TaAnitEsther
+Gregorian                       TanDegrees
+GregorianEpoch                  Tehran
+GregorianLeapYearQ              TemporalHour
+GregorianYearFromFixed          Thursday
+Haifa                           TimeOfDay
+Hebrew                          TishahBeAv
+HebrewBirthday                  Tishri
+HebrewBirthdayInGregorian       ToFixed
+HebrewCalendarElapsedDays       Tokyo
+HebrewEpoch                     ToMoment
+HebrewLeapYearQ                 TruePosition
+HebrewNewYear                   Tuesday
+HebrewNewYearDelay              TumpekInGregorian
+HinduAnomalisticMonth           Ujjain
+HinduAnomalisticYear            UniversalFromDynamical
+HinduArcsin                     UniversalFromLocal
+HinduCalendarYear               UniversalFromStandard
+HinduCreation                   Urbana
+HinduDayCount                   VisibleCrescent
+HinduEpoch                      Wednesday
+HinduEquationOfTime             Winter
+HinduLocale                     Yahrzeit
+HinduLunar                      YahrzeitInGregorian
+HinduLunarEra                   Yoga
+HinduLunarLongitude             YomHaZikkaron
+HinduLunarNewYear               YomKippur\
+\>", "Print"]
+}, Open  ]],
+
+Cell["\<\
+Prefixing the symbol with ? gives general information on that \
+symbol\
+\>", "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?Gregorian\)\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \("Gregorian represents the present civil (Gregorian) calendar. \
+Gregorian[] gives a list of components in Gregorian calendar dates. \
+Gregorian[fixedDate] gives the Gregorian calendar date corresponding to the \
+given fixed date."\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?Sunday\)\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \("Sunday represents a day of the week. Sunday[] gives a corresponding \
+numerical constant."\)], "Print"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Constructing a Date", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell["This shows you all the calendars which Calendrica supports:", "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Calendars[]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \({Egyptian, Armenian, Gregorian, Julian, Roman, Coptic, Ethiopic, ISO, 
+      Islamic, Hebrew, OldHinduSolar, OldHinduLunar, MayanLongCount, 
+      MayanHaab, MayanTzolkin, Bahai, ArithmeticPersian, ModifiedFrench, 
+      Balinese, ObservationalIslamic, Persian, FutureBahai, French, Chinese, 
+      HinduLunar, HinduSolar}\)], "Output"]
+}, Open  ]],
+
+Cell["\<\
+This displays the components in a date on a given calendar. \
+Component names are prefixed with 'C':\
+\>", "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Gregorian[]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \({CYear, CMonth, CDay}\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+  StyleBox["To construct a date, create a ",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["Mathematica",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontSlant->"Italic"],
+  StyleBox[" expression whose head is the name of the calendar, and whose \
+body consists of each component in order:",
+    Evaluatable->False,
+    AspectRatioFixed->True]
+}], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Gregorian[1965, \ 5, 15]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    InterpretationBox["\<\"Saturday, \\!\\(15\\) May \\!\\(1965\\)\"\>",
+      StringForm[ "``, `` `` ``", "Saturday", 15, "May", 1965],
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+Calendrica formats the output for easy reading, but keeps the \
+internal structure.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(% // FullForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      StyleBox[\(Gregorian[1965, 5, 15]\),
+        ShowSpecialCharacters->False,
+        ShowStringCharacters->True,
+        NumberMarks->True],
+      FullForm]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+You can use symbolic constants for the standard months and \
+weekdays. Make sure you put empty brackets after all symbolic \
+constants.:\
+\>", "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(May\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \(May\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(May[]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \(5\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Gregorian[1965, \ May[], 15]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    InterpretationBox["\<\"Saturday, \\!\\(15\\) May \\!\\(1965\\)\"\>",
+      StringForm[ "``, `` `` ``", "Saturday", 15, "May", 1965],
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+You can retrieve components of calendar dates by name, regardless \
+of their position in the date:\
+\>", "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CYear[Gregorian[1965, \ May[], 15]]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \(1965\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(HinduLunar[]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \({CYear, CMonth, CLeapMonth, CDay, CLeapDay}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CYear[HinduLunar[2022, \ 2, False, 15, False]]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \(2022\)], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Converting to Fixed Dates", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell["\<\
+Any calendar date can be converted to a fixed (R.D.) date by \
+passing the calendar date to the routine ToFixed[]:\
+\>", "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ToFixed[Gregorian[1965, \ May[], 15]]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \(717471\)], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Converting to Calendar Dates", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell["\<\
+Any fixed date can be converted into any calendar by passing the \
+fixed date to the routine which has the same name as the calendar:\
+\>", \
+"Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Gregorian[717471]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    InterpretationBox["\<\"Saturday, \\!\\(15\\) May \\!\\(1965\\)\"\>",
+      StringForm[ "``, `` `` ``", "Saturday", 15, "May", 1965],
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Chinese[717471]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    InterpretationBox["\<\"cycle \\!\\(77\\), year Yi-Si, month \\!\\(4\\), \
+day \\!\\(15\\)\"\>",
+      StringForm[ 
+      "cycle ``, year ``-``, ``month ``, day ``", 77, "Yi", "Si", "", 4, 15],
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+Note this is not the same as constructing a date from its \
+components (described above). In this case, you are passing a single integer; \
+in the previous case, you are passing a list of date components.\
+\>", "Text",\
+
+  Evaluatable->False,
+  AspectRatioFixed->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Converting Between Calendars", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell["\<\
+To convert a date in one calendar to another calendar in a single \
+step, use the ConvertDateTo[] routine:\
+\>", "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ConvertDateTo[Gregorian[1965, May[], 15], HinduLunar]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    InterpretationBox["\<\"Sanivara, \\!\\(15\\) Vaisakha \\!\\(2022\\) \
+V.E.\"\>",
+      StringForm[ 
+      "``, ```` ```` `` V.E.", "Sanivara", 15, "", "Vaisakha", "", 2022],
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+This converts the result of the previous conversion back to the \
+Gregorian calendar:\
+\>", "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ConvertDateTo[%, Gregorian]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    InterpretationBox["\<\"Saturday, \\!\\(15\\) May \\!\\(1965\\)\"\>",
+      StringForm[ "``, `` `` ``", "Saturday", 15, "May", 1965],
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell["Here is a date converted to all available calendars.", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Map[List[#, ConvertDateTo[Gregorian[1965, May[], 15], #]] &, 
+        Calendars[]] // ColumnForm\)], "Input"],
+
+Cell[BoxData[
+    InterpretationBox[GridBox[{
+          {\({Egyptian, "\!\(14\) Thoth \!\(2714\)"}\)},
+          {\({Armenian, "\!\(14\) Mareri \!\(1414\)"}\)},
+          {\({Gregorian, "Saturday, \!\(15\) May \!\(1965\)"}\)},
+          {\({Julian, "\!\(2\) May \!\(1965\) C.E."}\)},
+          {\({Roman, "ante diem VI Nones May, \!\(1965\) C.E."}\)},
+          {\({Coptic, "\!\(7\) Bashans \!\(1681\) A.M."}\)},
+          {\({Ethiopic, "Kidamme, \!\(7\) Genbot \!\(1957\) E.E."}\)},
+          {\({ISO, "Saturday, Week \!\(19\), \!\(1965\)"}\)},
+          {\({Islamic, "yaum as-sabt, \!\(14\) Muharram \!\(1385\) A.H."}\)},
+          {\({Hebrew, "yom shabbat, \!\(13\) Iyyar \!\(5725\) A.M."}\)},
+          {\({OldHinduSolar, "Sanivara, \!\(30\) Mesha \!\(5066\) K.Y."}\)},
+          {\({OldHinduLunar, 
+              "Sanivara, \!\(15\) Vaisakha \!\(5066\) K.Y."}\)},
+          {\({MayanLongCount, 
+              "\!\(12\).\!\(17\).\!\(11\).\!\(12\).\!\(13\)"}\)},
+          {\({MayanHaab, "\!\(11\) Uo"}\)},
+          {\({MayanTzolkin, "\!\(11\) Ben"}\)},
+          {\({Bahai, 
+              "Istiqlal, Mulk Jamal, Jad of Vahid \!\(7\), Kull-i-Shay \
+\!\(1\) B.E."}\)},
+          {
+            RowBox[{"{", 
+              RowBox[{"ArithmeticPersian", ",", 
+                FormBox["\<\"\\!\\(25\\) Ordibehesht \\!\\(1344\\) A.P.\"\>",
+                  "StandardForm"]}], "}"}]},
+          {
+            RowBox[{"{", 
+              RowBox[{"ModifiedFrench", ",", 
+                
+                FormBox["\<\"Decade III, Quintidi de Floreal de l'Annee \
+\\!\\(173\\) de la Revolution\"\>",
+                  "StandardForm"]}], "}"}]},
+          {\({Balinese, 
+              "Menga Kajeng Sri Paing Urukung Saniscara Ludra Dadi Dewa \
+(Ukir)"}\)},
+          {
+            RowBox[{"{", 
+              RowBox[{"ObservationalIslamic", ",", 
+                
+                FormBox["\<\"yaum as-sabt, \\!\\(14\\) Muharram \\!\\(1385\\) \
+A.H.\"\>",
+                  "StandardForm"]}], "}"}]},
+          {\({Persian, "\!\(25\) Ordibehesht \!\(1344\) A.P."}\)},
+          {
+            RowBox[{"{", 
+              RowBox[{"FutureBahai", ",", 
+                
+                FormBox["\<\"Istijlal, Sultan Jamal, Jad of Vahid \\!\\(7\\), \
+Kull-i-Shay \\!\\(1\\) B.E.\"\>",
+                  "StandardForm"]}], "}"}]},
+          {\({French, 
+              "Decade III, Quintidi de Floreal de l'Annee \!\(173\) de la \
+Revolution"}\)},
+          {\({Chinese, 
+              "cycle \!\(77\), year Yi-Si, month \!\(4\), day \!\(15\)"}\)},
+          {\({HinduLunar, "Sanivara, \!\(15\) Vaisakha \!\(2022\) V.E."}\)},
+          {\({HinduSolar, "Sanivara, \!\(2\) Vrishabha \!\(1887\) S.E."}\)}
+          },
+        GridBaseline->{Baseline, {1, 1}},
+        ColumnAlignments->{Left}],
+      ColumnForm[ {{Egyptian, 
+        Egyptian[ 2714, 1, 14]}, {Armenian, 
+        Armenian[ 1414, 10, 14]}, {Gregorian, 
+        Gregorian[ 1965, 5, 15]}, {Julian, 
+        Julian[ 1965, 5, 2]}, {Roman, 
+        Roman[ 1965, 5, 2, 6, False]}, {Coptic, 
+        Coptic[ 1681, 9, 7]}, {Ethiopic, 
+        Ethiopic[ 1957, 9, 7]}, {ISO, 
+        ISO[ 1965, 19, 6]}, {Islamic, 
+        Islamic[ 1385, 1, 14]}, {Hebrew, 
+        Hebrew[ 5725, 2, 13]}, {OldHinduSolar, 
+        OldHinduSolar[ 5066, 1, 30]}, {OldHinduLunar, 
+        OldHinduLunar[ 5066, 2, False, 15]}, {MayanLongCount, 
+        MayanLongCount[ 12, 17, 11, 12, 13]}, {MayanHaab, 
+        MayanHaab[ 2, 11]}, {MayanTzolkin, 
+        MayanTzolkin[ 11, 13]}, {Bahai, 
+        Bahai[ 1, 7, 8, 3, 18]}, {ArithmeticPersian, 
+        ArithmeticPersian[ 1344, 2, 25]}, {ModifiedFrench, 
+        ModifiedFrench[ 173, 8, 25]}, {Balinese, 
+        Balinese[ False, 1, 3, 1, 2, 3, 7, 5, 9, 6]}, {ObservationalIslamic, 
+        ObservationalIslamic[ 1385, 1, 14]}, {Persian, 
+        Persian[ 1344, 2, 25]}, {FutureBahai, 
+        FutureBahai[ 1, 7, 8, 3, 17]}, {French, 
+        French[ 173, 8, 25]}, {Chinese, 
+        Chinese[ 77, 42, 4, False, 15]}, {HinduLunar, 
+        HinduLunar[ 2022, 2, False, 15, False]}, {HinduSolar, 
+        HinduSolar[ 1887, 2, 2]}}],
+      Editable->False]], "Output"],
+
+Cell[BoxData[
+    InterpretationBox[GridBox[{
+          {\({Egyptian, "\<\!\(14\) Thoth \!\(2714\)\>"}\)},
+          {\({Armenian, "\<\!\(14\) Mareri \!\(1414\)\>"}\)},
+          {\({Gregorian, "\<Saturday, \!\(15\) May \!\(1965\)\>"}\)},
+          {\({Julian, "\<\!\(2\) May \!\(1965\) C.E.\>"}\)},
+          {\({Roman, "\<ante diem VI Nones May, \!\(1965\) C.E.\>"}\)},
+          {\({Coptic, "\<\!\(7\) Bashans \!\(1681\) A.M.\>"}\)},
+          {\({Ethiopic, "\<Kidamme, \!\(7\) Genbot \!\(1957\) E.E.\>"}\)},
+          {\({ISO, "\<Saturday, Week \!\(19\), \!\(1965\)\>"}\)},
+          {\({Islamic, "\<yaum as-sabt, \!\(14\) Muharram \!\(1385\) A.H.\>"}\
+\)},
+          {\({Hebrew, "\<yom shabbat, \!\(13\) Iyyar \!\(5725\) A.M.\>"}\)},
+          {\({OldHinduSolar, "\<Sanivara, \!\(30\) Mesha \!\(5066\) \
+K.Y.\>"}\)},
+          {\({OldHinduLunar, "\<Sanivara, \!\(15\) Vaisakha \!\(5066\) \
+K.Y.\>"}\)},
+          {\({MayanLongCount, "\<\!\(12\).\!\(17\).\!\(11\).\!\(12\).\!\(13\)\
+\>"}\)},
+          {\({MayanHaab, "\<\!\(11\) Uo\>"}\)},
+          {\({MayanTzolkin, "\<\!\(11\) Ben\>"}\)},
+          {\({Bahai, "\<Istiqlal, Mulk Jamal, Jad of Vahid \!\(7\), \
+Kull-i-Shay \!\(1\) B.E.\>"}\)},
+          {
+            RowBox[{"{", 
+              RowBox[{"ArithmeticPersian", ",", 
+                FormBox["\"\<\\!\\(25\\) Ordibehesht \\!\\(1344\\) A.P.\>\"",
+                  "StandardForm"]}], "}"}]},
+          {
+            RowBox[{"{", 
+              RowBox[{"ModifiedFrench", ",", 
+                
+                FormBox[
+                  "\"\<Decade III, Quintidi de Floreal de l'Annee \
+\\!\\(173\\) de la Revolution\>\"",
+                  "StandardForm"]}], "}"}]},
+          {\({Balinese, "\<Menga Kajeng Sri Paing Urukung Saniscara Ludra \
+Dadi Dewa (Ukir)\>"}\)},
+          {
+            RowBox[{"{", 
+              RowBox[{"ObservationalIslamic", ",", 
+                
+                FormBox[
+                  "\"\<yaum as-sabt, \\!\\(14\\) Muharram \\!\\(1385\\) \
+A.H.\>\"",
+                  "StandardForm"]}], "}"}]},
+          {\({Persian, "\<\!\(25\) Ordibehesht \!\(1344\) A.P.\>"}\)},
+          {
+            RowBox[{"{", 
+              RowBox[{"FutureBahai", ",", 
+                
+                FormBox[
+                  "\"\<Istijlal, Sultan Jamal, Jad of Vahid \\!\\(7\\), \
+Kull-i-Shay \\!\\(1\\) B.E.\>\"",
+                  "StandardForm"]}], "}"}]},
+          {\({French, "\<Decade III, Quintidi de Floreal de l'Annee \!\(173\) \
+de la Revolution\>"}\)},
+          {\({Chinese, "\<cycle \!\(77\), year Yi-Si, month \!\(4\), day \
+\!\(15\)\>"}\)},
+          {\({HinduLunar, "\<Sanivara, \!\(15\) Vaisakha \!\(2022\) \
+V.E.\>"}\)},
+          {\({HinduSolar, "\<Sanivara, \!\(2\) Vrishabha \!\(1887\) \
+S.E.\>"}\)}
+          },
+        GridBaseline->{Baseline, {1, 1}},
+        ColumnAlignments->{Left}],
+      ColumnForm[ {{Egyptian, 
+        Egyptian[ 2714, 1, 14]}, {Armenian, 
+        Armenian[ 1414, 10, 14]}, {Gregorian, 
+        Gregorian[ 1965, 5, 15]}, {Julian, 
+        Julian[ 1965, 5, 2]}, {Roman, 
+        Roman[ 1965, 5, 2, 6, False]}, {Coptic, 
+        Coptic[ 1681, 9, 7]}, {Ethiopic, 
+        Ethiopic[ 1957, 9, 7]}, {ISO, 
+        ISO[ 1965, 19, 6]}, {Islamic, 
+        Islamic[ 1385, 1, 14]}, {Hebrew, 
+        Hebrew[ 5725, 2, 13]}, {OldHinduSolar, 
+        OldHinduSolar[ 5066, 1, 30]}, {OldHinduLunar, 
+        OldHinduLunar[ 5066, 2, False, 15]}, {MayanLongCount, 
+        MayanLongCount[ 12, 17, 11, 12, 13]}, {MayanHaab, 
+        MayanHaab[ 2, 11]}, {MayanTzolkin, 
+        MayanTzolkin[ 11, 13]}, {Bahai, 
+        Bahai[ 1, 7, 8, 3, 18]}, {ArithmeticPersian, 
+        ArithmeticPersian[ 1344, 2, 25]}, {ModifiedFrench, 
+        ModifiedFrench[ 173, 8, 25]}, {Balinese, 
+        Balinese[ False, 1, 3, 1, 2, 3, 7, 5, 9, 6]}, {ObservationalIslamic, 
+        ObservationalIslamic[ 1385, 1, 14]}, {Persian, 
+        Persian[ 1344, 2, 25]}, {FutureBahai, 
+        FutureBahai[ 1, 7, 8, 3, 17]}, {French, 
+        French[ 173, 8, 25]}, {Chinese, 
+        Chinese[ 77, 42, 4, False, 15]}, {HinduLunar, 
+        HinduLunar[ 2022, 2, False, 15, False]}, {HinduSolar, 
+        HinduSolar[ 1887, 2, 2]}}],
+      Editable->False]], "Input"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Converting Times of Day", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?TimeOfDay\)\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \("TimeOfDay represents a time of day. TimeOfDay[tee] gives the time of \
+day from moment $tee$. TimeOfDay[] gives a list of components in a time of \
+day."\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(TimeOfDay[]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \({CHour, CMinute, CSecond}\)], "Output"]
+}, Open  ]],
+
+Cell["This represents 3:30:10 AM:", "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(TimeOfDay[3, 30, 10]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \("03:30:10 A.M."\)], "Output"]
+}, Open  ]],
+
+Cell["To convert the last expression to a fraction of a day:", "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ToMoment[%]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \(1261\/8640\)], "Output"]
+}, Open  ]],
+
+Cell["\<\
+And this converts a fixed date which may include a fraction of a \
+day to a time of day:\
+\>", "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(TimeOfDay[%]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \("03:30:10 A.M."\)], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["The Current Date and Time", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[BoxData[
+    \(\(?CurrentDate\)\)], "Input"],
+
+Cell[BoxData[
+    \("CurrentDate[] gives the current fixed date according to the computer's \
+clock, in local time."\)], "Print"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Gregorian[CurrentDate[]]\)], "Input"],
+
+Cell[BoxData[
+    InterpretationBox["\<\"Monday, \\!\\(20\\) March \\!\\(2000\\)\"\>",
+      StringForm[ "``, `` `` ``", "Monday", 20, "March", 2000],
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?CurrentMoment\)\)], "Input"],
+
+Cell[BoxData[
+    \("CurrentMoment[] gives the fixed moment according to the computer's \
+clock, in local time."\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(TimeOfDay[CurrentMoment[]]\)], "Input"],
+
+Cell[BoxData[
+    \("10:36:24 A.M."\)], "Output"]
+}, Open  ]],
+
+Cell["\<\
+The following won't work because calendar conversions only work on \
+integers.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Gregorian[CurrentMoment[]]\)], "Input"],
+
+Cell[BoxData[
+    \("Gregorian[730199.4420486111111111111111111111`16.8206]"\)], "Output"]
+}, Open  ]],
+
+Cell["This will work.", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Gregorian[Floor[CurrentMoment[]]]\)], "Input"],
+
+Cell[BoxData[
+    InterpretationBox["\<\"Monday, \\!\\(20\\) March \\!\\(2000\\)\"\>",
+      StringForm[ "``, `` `` ``", "Monday", 20, "March", 2000],
+      Editable->False]], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Locations", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell["\<\
+A number of functions take a location on the Earth's surface as an \
+argument.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?Location\)\)], "Input"],
+
+Cell[BoxData[
+    \("Location represents a location on the Earth's surface. Location[] \
+gives a list of components in a Location."\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Location[]\)], "Input"],
+
+Cell[BoxData[
+    \({CPlaceName, CLatitude, CLongitude, CElevation, CZone}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?CZone\)\)], "Input"],
+
+Cell[BoxData[
+    \("CZone[locale] returns the time zone (as an offset from universal time) \
+of Location $locale$."\)], "Print"]
+}, Open  ]],
+
+Cell["\<\
+Locations needed by the various calendars are built-in, along with \
+a couple of sample Locations that have nothing to do with the calendrs.\
+\>", \
+"Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(LosAngeles[]\)], "Input"],
+
+Cell[BoxData[
+    InterpretationBox["\<\"Los Angeles, CA, USA: lat. \\!\\(\\\"34.067\\\"\\) \
+N, long. \\!\\(\\\"118.25\\\"\\) W, elev. \\!\\(0\\), zone \
+\\!\\(\\\"-8.\\\"\\)\"\>",
+      StringForm[ 
+      "``: lat. `` ``, long. `` ``, elev. ``, zone ``", 
+        "Los Angeles, CA, USA", 
+        NumberForm[ 34.06666666666667, {5, 3}], "N", 
+        NumberForm[ 118.25, {5, 3}], "W", 0, 
+        NumberForm[ -8.0, {4, 2}]],
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+Calendrica formats the output for easy reading, but keeps the \
+internal structure.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(% // InputForm\)], "Input"],
+
+Cell["Location[\"Los Angeles, CA, USA\", 511/15, -473/4, 0, -8]", "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Urbana[]\)], "Input"],
+
+Cell[BoxData[
+    InterpretationBox["\<\"Urbana, IL, USA: lat. \\!\\(\\\"40.1\\\"\\) N, \
+long. \\!\\(\\\"88.2\\\"\\) W, elev. \\!\\(225\\), zone \
+\\!\\(\\\"-6.\\\"\\)\"\>",
+      StringForm[ 
+      "``: lat. `` ``, long. `` ``, elev. ``, zone ``", "Urbana, IL, USA", 
+        NumberForm[ 40.100000000000001, {5, 3}], "N", 
+        NumberForm[ 88.200000000000003, {5, 3}], "W", 225, 
+        NumberForm[ -6.0, {4, 2}]],
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Jerusalem[]\)], "Input"],
+
+Cell[BoxData[
+    InterpretationBox["\<\"Jerusalem, Israel: lat. \\!\\(\\\"31.8\\\"\\) N, \
+long. \\!\\(\\\"35.2\\\"\\) E, elev. \\!\\(800\\), zone \\!\\(\\\"2.\\\"\\)\"\
+\>",
+      StringForm[ 
+      "``: lat. `` ``, long. `` ``, elev. ``, zone ``", "Jerusalem, Israel", 
+        NumberForm[ 31.800000000000001, {5, 3}], "N", 
+        NumberForm[ 35.200000000000003, {5, 3}], "E", 800, 
+        NumberForm[ 2.0, {4, 2}]],
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell["Here is a calculation involving a Location.", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?Sunrise\)\)], "Input"],
+
+Cell[BoxData[
+    \("Sunrise[date, locale] gives the standard time of sunrise on $date$ at \
+$locale$."\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?LocalFromStandard\)\)], "Input"],
+
+Cell[BoxData[
+    \("LocalFromStandard[teeS, locale] gives the local time from standard \
+$teeS$ at $locale$."\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Sunrise[ToFixed[Gregorian[2000, 1, 1]], Jerusalem[]] // 
+      InputForm\)], "Input"],
+
+Cell["730120.2739098221", "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(LocalFromStandard[%, Jerusalem[]] // InputForm\)], "Input"],
+
+Cell["730120.2883542666", "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(TimeOfDay[%]\)], "Input"],
+
+Cell[BoxData[
+    \("06:55:13 A.M."\)], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Validating Data Types", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell["\<\
+Each structured data type has a corresponding function that \
+validates it.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?Gregorian\)\)], "Input"],
+
+Cell[BoxData[
+    \("Gregorian represents the present civil (Gregorian) calendar. \
+Gregorian[] gives a list of components in Gregorian calendar dates. \
+Gregorian[fixedDate] gives the Gregorian calendar date corresponding to the \
+given fixed date."\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?GregorianQ\)\)], "Input"],
+
+Cell[BoxData[
+    \("GregorianQ[date] gives True if $date$ is a valid Gregorian date, False \
+otherwise."\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Gregorian[]\)], "Input"],
+
+Cell[BoxData[
+    \({CYear, CMonth, CDay}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(GregorianQ[Gregorian[1965, 5, 15]]\)], "Input"],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(GregorianQ[Gregorian[1965, 5, 15, 1]]\)], "Input"],
+
+Cell[BoxData[
+    \(False\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(GregorianQ[Roman[1965, 5, 15]]\)], "Input"],
+
+Cell[BoxData[
+    \(False\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(GregorianQ[Gregorian[1965, True, 15]]\)], "Input"],
+
+Cell[BoxData[
+    \(False\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?LocationQ\)\)], "Input"],
+
+Cell[BoxData[
+    \("LocationQ[location] gives True if location is a valid Location, False \
+otherwise."\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?TimeOfDayQ\)\)], "Input"],
+
+Cell[BoxData[
+    \("TimeOfDayQ[time] gives True if $time$ is a valid TimeOfDay, False \
+otherwise."\)], "Print"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Accessing Non-Global Symbols", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[TextData[{
+  "Previous versions of Calendrica only exported a subset of all routines to \
+the global namespace, requiring manipulation of the ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " context to access some routines. This version exports almost every \
+routine to the global namespace, except for minor housekeeping functions, and \
+data structures used internally."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Test Suite", "Section",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[TextData[{
+  StyleBox["Calendrica includes a test suite to help ensure the accuracy of \
+its algorithms. For each calendar, the test suite converts a list of 33 fixed \
+dates to calendar dates and compares its results with a table of calendar \
+dates transcribed by hand from ",
+    Evaluatable->False,
+    AspectRatioFixed->True],
+  StyleBox["Calendrical Calculations",
+    Evaluatable->False,
+    AspectRatioFixed->True,
+    FontSlant->"Italic"],
+  StyleBox[". It then converts the list of calendar dates in the table back \
+to fixed dates, and compares its results with the table of fixed dates. If \
+any discrepancies are found, a list including the fixed dates and calendar \
+dates from the tables is generated and printed instead of \"OK\". The test \
+suite can take a number of minutes to run:",
+    Evaluatable->False,
+    AspectRatioFixed->True]
+}], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CalendricaTest[]\)], "Input",
+  AspectRatioFixed->True],
+
+Cell["\<\
+Current date and time (local): Monday, 20 March 2000, 11:45:46 A.M.
+
+Basic support algorithms:
+
+fixed -> week day: OK
+fixed -> Julian day: OK
+Julian day -> fixed: OK
+
+Arithmetic calendars:
+
+fixed -> Egyptian.................................: OK
+Egyptian -> fixed.................................: OK
+fixed -> Armenian.................................: OK
+Armenian -> fixed.................................: OK
+fixed -> Gregorian.................................: OK
+Gregorian -> fixed.................................: OK
+fixed -> Julian.................................: OK
+Julian -> fixed.................................: OK
+fixed -> Roman.................................: OK
+Roman -> fixed.................................: OK
+fixed -> Coptic.................................: OK
+Coptic -> fixed.................................: OK
+fixed -> Ethiopic.................................: OK
+Ethiopic -> fixed.................................: OK
+fixed -> ISO.................................: OK
+ISO -> fixed.................................: OK
+fixed -> Islamic.................................: OK
+Islamic -> fixed.................................: OK
+fixed -> Hebrew.................................: OK
+Hebrew -> fixed.................................: OK
+fixed -> OldHinduSolar.................................: OK
+OldHinduSolar -> fixed.................................: OK
+fixed -> OldHinduLunar.................................: OK
+OldHinduLunar -> fixed.................................: OK
+fixed -> MayanLongCount.................................: OK
+MayanLongCount -> fixed.................................: OK
+fixed -> Bahai.................................: OK
+Bahai -> fixed.................................: OK
+fixed -> ArithmeticPersian.................................: OK
+ArithmeticPersian -> fixed.................................: OK
+fixed -> ModifiedFrench.................................: OK
+ModifiedFrench -> fixed.................................: OK
+
+fixed -> MayanHaab.................................: OK
+fixed -> MayanTzolkin.................................: OK
+fixed -> Balinese.................................: OK
+
+Astronomical calendars:
+
+fixed -> ObservationalIslamic.................................: OK
+ObservationalIslamic -> fixed.................................: OK
+fixed -> Persian.................................: OK
+Persian -> fixed.................................: OK
+fixed -> FutureBahai.................................: OK
+FutureBahai -> fixed.................................: OK
+fixed -> French.................................: OK
+French -> fixed.................................: OK
+fixed -> Chinese.................................: OK
+Chinese -> fixed.................................: OK
+fixed -> HinduSolar.................................: OK
+HinduSolar -> fixed.................................: OK
+fixed -> HinduLunar.................................: OK
+HinduLunar -> fixed.................................: OK
+
+Date Formats:
+
+Egyptian: 14 Thoth 2714
+Armenian: 14 Mareri 1414
+Gregorian: Saturday, 15 May 1965
+Julian: 2 May 1965 C.E.
+Roman: ante diem VI Nones May, 1965 C.E.
+Coptic: 7 Bashans 1681 A.M.
+Ethiopic: Kidamme, 7 Genbot 1957 E.E.
+ISO: Saturday, Week 19, 1965
+Islamic: yaum as-sabt, 14 Muharram 1385 A.H.
+Hebrew: yom shabbat, 13 Iyyar 5725 A.M.
+OldHinduSolar: Sanivara, 30 Mesha 5066 K.Y.
+OldHinduLunar: Sanivara, 15 Vaisakha 5066 K.Y.
+MayanLongCount: 12.17.11.12.13
+MayanHaab: 11 Uo
+MayanTzolkin: 11 Ben
+Bahai: Istiqlal, Mulk Jamal, Jad of Vahid 7, Kull-i-Shay 1 B.E.
+ArithmeticPersian: 25 Ordibehesht 1344 A.P.
+ModifiedFrench: Decade III, Quintidi de Floreal de l'Annee 173 de la \
+Revolution
+Balinese: Menga Kajeng Sri Paing Urukung Saniscara Ludra Dadi Dewa (Ukir)
+ObservationalIslamic: yaum as-sabt, 14 Muharram 1385 A.H.
+Persian: 25 Ordibehesht 1344 A.P.
+FutureBahai: Istijlal, Sultan Jamal, Jad of Vahid 7, Kull-i-Shay 1 B.E.
+French: Decade III, Quintidi de Floreal de l'Annee 173 de la Revolution
+Chinese: cycle 77, year Yi-Si, month 4, day 15
+HinduLunar: Sanivara, 15 Vaisakha 2022 V.E.
+HinduSolar: Sanivara, 2 Vrishabha 1887 S.E.
+
+Some holidays:
+
+fixed -> Easter: OK
+fixed -> YomKippur: OK
+fixed -> Passover: OK
+fixed -> Purim: OK
+
+Done!\
+\>", "Print",
+  Evaluatable->False,
+  AspectRatioFixed->True]
+}, Open  ]]
+}, Open  ]]
+},
+FrontEndVersion->"4.1 for X",
+ScreenRectangle->{{0, 1239}, {0, 977}},
+WindowToolbars->{},
+CellGrouping->Manual,
+WindowSize->{582, 724},
+WindowMargins->{{316, Automatic}, {Automatic, 56}},
+PrivateNotebookOptions->{"ColorPalette"->{RGBColor, -1}},
+ShowCellLabel->True,
+ShowCellTags->False,
+RenderingOptions->{"ObjectDithering"->True,
+"RasterDithering"->False}
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1727, 52, 207, 7, 110, "Title",
+  Evaluatable->False],
+Cell[1937, 61, 111, 2, 50, "Subtitle",
+  Evaluatable->False],
+Cell[2051, 65, 470, 17, 48, "Text",
+  Evaluatable->False],
+Cell[2524, 84, 634, 17, 82, "Text",
+  Evaluatable->False]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3195, 106, 80, 2, 53, "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[3300, 112, 41, 0, 43, "Subsection"],
+Cell[3344, 114, 438, 7, 99, "Text"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3831, 127, 26, 0, 53, "Section"],
+Cell[3860, 129, 4047, 78, 1306, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[7944, 212, 85, 2, 53, "Section",
+  Evaluatable->False],
+Cell[8032, 216, 2790, 89, 303, "Text",
+  Evaluatable->False]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[10859, 310, 82, 2, 53, "Section",
+  Evaluatable->False],
+Cell[10944, 314, 427, 14, 48, "Text",
+  Evaluatable->False],
+Cell[11374, 330, 73, 2, 27, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[11484, 337, 92, 2, 53, "Section",
+  Evaluatable->False],
+Cell[11579, 341, 154, 5, 31, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[11758, 350, 76, 2, 27, "Input"],
+Cell[11837, 354, 8988, 200, 2993, "Print"]
+}, Open  ]],
+Cell[20840, 557, 142, 5, 31, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[21007, 566, 73, 2, 27, "Input"],
+Cell[21083, 570, 263, 4, 55, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[21383, 579, 70, 2, 27, "Input"],
+Cell[21456, 583, 124, 2, 39, "Print"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[21629, 591, 86, 2, 53, "Section",
+  Evaluatable->False],
+Cell[21718, 595, 123, 2, 31, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[21866, 601, 70, 2, 27, "Input"],
+Cell[21939, 605, 356, 5, 75, "Output"]
+}, Open  ]],
+Cell[22310, 613, 172, 5, 48, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[22507, 622, 70, 2, 27, "Input"],
+Cell[22580, 626, 55, 1, 27, "Output"]
+}, Open  ]],
+Cell[22650, 630, 449, 14, 48, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[23124, 648, 83, 2, 27, "Input"],
+Cell[23210, 652, 185, 3, 27, "Output"]
+}, Open  ]],
+Cell[23410, 658, 107, 3, 31, "Text"],
+
+Cell[CellGroupData[{
+Cell[23542, 665, 46, 1, 27, "Input"],
+Cell[23591, 668, 198, 6, 27, "Output"]
+}, Open  ]],
+Cell[23804, 677, 208, 6, 48, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[24037, 687, 62, 2, 27, "Input"],
+Cell[24102, 691, 37, 1, 27, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[24176, 697, 64, 2, 27, "Input"],
+Cell[24243, 701, 35, 1, 27, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[24315, 707, 87, 2, 27, "Input"],
+Cell[24405, 711, 185, 3, 27, "Output"]
+}, Open  ]],
+Cell[24605, 717, 170, 5, 48, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[24800, 726, 94, 2, 27, "Input"],
+Cell[24897, 730, 38, 1, 27, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[24972, 736, 71, 2, 27, "Input"],
+Cell[25046, 740, 77, 1, 27, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[25160, 746, 105, 2, 27, "Input"],
+Cell[25268, 750, 38, 1, 27, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[25355, 757, 92, 2, 53, "Section",
+  Evaluatable->False],
+Cell[25450, 761, 186, 5, 48, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[25661, 770, 96, 2, 27, "Input"],
+Cell[25760, 774, 40, 1, 27, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[25849, 781, 95, 2, 53, "Section",
+  Evaluatable->False],
+Cell[25947, 785, 207, 6, 48, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[26179, 795, 76, 2, 27, "Input"],
+Cell[26258, 799, 185, 3, 27, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[26480, 807, 74, 2, 27, "Input"],
+Cell[26557, 811, 245, 5, 27, "Output"]
+}, Open  ]],
+Cell[26817, 819, 278, 7, 65, "Text",
+  Evaluatable->False]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[27132, 831, 95, 2, 53, "Section",
+  Evaluatable->False],
+Cell[27230, 835, 178, 5, 48, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[27433, 844, 112, 2, 27, "Input"],
+Cell[27548, 848, 226, 5, 27, "Output"]
+}, Open  ]],
+Cell[27789, 856, 157, 5, 31, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[27971, 865, 86, 2, 27, "Input"],
+Cell[28060, 869, 185, 3, 27, "Output"]
+}, Open  ]],
+Cell[28260, 875, 68, 0, 31, "Text"],
+
+Cell[CellGroupData[{
+Cell[28353, 879, 129, 2, 43, "Input"],
+Cell[28485, 883, 4127, 89, 452, "Output"],
+Cell[32615, 974, 4195, 93, 452, "Input"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[36859, 1073, 90, 2, 53, "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[36974, 1079, 73, 2, 27, "Input"],
+Cell[37050, 1083, 187, 3, 39, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[37274, 1091, 70, 2, 27, "Input"],
+Cell[37347, 1095, 59, 1, 27, "Output"]
+}, Open  ]],
+Cell[37421, 1099, 91, 2, 31, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[37537, 1105, 79, 2, 27, "Input"],
+Cell[37619, 1109, 49, 1, 27, "Output"]
+}, Open  ]],
+Cell[37683, 1113, 118, 2, 31, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[37826, 1119, 70, 2, 27, "Input"],
+Cell[37899, 1123, 44, 1, 117, "Output"]
+}, Open  ]],
+Cell[37958, 1127, 160, 5, 31, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[38143, 1136, 71, 2, 27, "Input"],
+Cell[38217, 1140, 49, 1, 27, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[38315, 1147, 92, 2, 53, "Section",
+  Evaluatable->False],
+Cell[38410, 1151, 49, 1, 27, "Input"],
+Cell[38462, 1154, 129, 2, 39, "Print"],
+
+Cell[CellGroupData[{
+Cell[38616, 1160, 57, 1, 27, "Input"],
+Cell[38676, 1163, 185, 3, 27, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[38898, 1171, 51, 1, 27, "Input"],
+Cell[38952, 1174, 125, 2, 39, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[39114, 1181, 59, 1, 27, "Input"],
+Cell[39176, 1184, 49, 1, 27, "Output"]
+}, Open  ]],
+Cell[39240, 1188, 102, 3, 31, "Text"],
+
+Cell[CellGroupData[{
+Cell[39367, 1195, 59, 1, 27, "Input"],
+Cell[39429, 1198, 90, 1, 27, "Output"]
+}, Open  ]],
+Cell[39534, 1202, 31, 0, 31, "Text"],
+
+Cell[CellGroupData[{
+Cell[39590, 1206, 66, 1, 27, "Input"],
+Cell[39659, 1209, 185, 3, 27, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[39893, 1218, 76, 2, 53, "Section",
+  Evaluatable->False],
+Cell[39972, 1222, 102, 3, 31, "Text"],
+
+Cell[CellGroupData[{
+Cell[40099, 1229, 46, 1, 27, "Input"],
+Cell[40148, 1232, 144, 2, 39, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[40329, 1239, 43, 1, 27, "Input"],
+Cell[40375, 1242, 88, 1, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[40500, 1248, 43, 1, 70, "Input"],
+Cell[40546, 1251, 129, 2, 70, "Print"]
+}, Open  ]],
+Cell[40690, 1256, 166, 4, 70, "Text"],
+
+Cell[CellGroupData[{
+Cell[40881, 1264, 45, 1, 70, "Input"],
+Cell[40929, 1267, 461, 10, 70, "Output"]
+}, Open  ]],
+Cell[41405, 1280, 107, 3, 70, "Text"],
+
+Cell[CellGroupData[{
+Cell[41537, 1287, 47, 1, 70, "Input"],
+Cell[41587, 1290, 75, 0, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[41699, 1295, 41, 1, 70, "Input"],
+Cell[41743, 1298, 455, 9, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[42235, 1312, 44, 1, 70, "Input"],
+Cell[42282, 1315, 457, 9, 70, "Output"]
+}, Open  ]],
+Cell[42754, 1327, 59, 0, 70, "Text"],
+
+Cell[CellGroupData[{
+Cell[42838, 1331, 45, 1, 70, "Input"],
+Cell[42886, 1334, 116, 2, 70, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[43039, 1341, 55, 1, 70, "Input"],
+Cell[43097, 1344, 123, 2, 70, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[43257, 1351, 105, 2, 70, "Input"],
+Cell[43365, 1355, 35, 0, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[43437, 1360, 79, 1, 70, "Input"],
+Cell[43519, 1363, 35, 0, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[43591, 1368, 45, 1, 70, "Input"],
+Cell[43639, 1371, 49, 1, 70, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[43737, 1378, 88, 2, 70, "Section",
+  Evaluatable->False],
+Cell[43828, 1382, 99, 3, 70, "Text"],
+
+Cell[CellGroupData[{
+Cell[43952, 1389, 47, 1, 70, "Input"],
+Cell[44002, 1392, 263, 4, 70, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[44302, 1401, 48, 1, 70, "Input"],
+Cell[44353, 1404, 118, 2, 70, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[44508, 1411, 44, 1, 70, "Input"],
+Cell[44555, 1414, 55, 1, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[44647, 1420, 67, 1, 70, "Input"],
+Cell[44717, 1423, 38, 1, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[44792, 1429, 70, 1, 70, "Input"],
+Cell[44865, 1432, 39, 1, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[44941, 1438, 63, 1, 70, "Input"],
+Cell[45007, 1441, 39, 1, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[45083, 1447, 70, 1, 70, "Input"],
+Cell[45156, 1450, 39, 1, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[45232, 1456, 47, 1, 70, "Input"],
+Cell[45282, 1459, 117, 2, 70, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[45436, 1466, 48, 1, 70, "Input"],
+Cell[45487, 1469, 113, 2, 70, "Print"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[45649, 1477, 95, 2, 70, "Section",
+  Evaluatable->False],
+Cell[45747, 1481, 400, 8, 70, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[46184, 1494, 77, 2, 70, "Section",
+  Evaluatable->False],
+Cell[46264, 1498, 919, 20, 70, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[47208, 1522, 75, 2, 70, "Input"],
+Cell[47286, 1526, 4293, 105, 70, "Print",
+  Evaluatable->False]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+
