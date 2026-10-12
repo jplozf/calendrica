@@ -10,9 +10,7 @@ const ArmenianEpoch int64 = 201443
 
 // Armenian représente une date dans le calendrier arménien.
 type Armenian struct {
-	Year  int64
-	Month int
-	Day   int
+	StandardDate
 }
 
 // Noms des jours de la semaine
@@ -46,9 +44,7 @@ var ArmenianMonthNames = []string{
 // NewArmenian crée une nouvelle instance de date arménienne.
 func NewArmenian(year int64, month int, day int) Armenian {
 	return Armenian{
-		Year:  year,
-		Month: month,
-		Day:   day,
+		StandardDate: StandardDate{Year: year, Month: month, Day: day},
 	}
 }
 
@@ -66,9 +62,7 @@ func (a Armenian) ToFixed() int64 {
 func ArmenianFromFixed(rd int64) Armenian {
 	d := EgyptianFromFixed(rd + EgyptianEpoch - ArmenianEpoch)
 	return Armenian{
-		Year:  d.Year,
-		Month: d.Month,
-		Day:   d.Day,
+		StandardDate: StandardDate{Year: d.Year, Month: d.Month, Day: d.Day},
 	}
 }
 

@@ -8,13 +8,6 @@ import (
 // JD 1448638 = 26 février 747 av. J.-C. (Julien) = R.D. -272787.
 const EgyptianEpoch int64 = -272787
 
-// Egyptian représente une date dans le calendrier égyptien.
-type Egyptian struct {
-	Year  int64
-	Month int
-	Day   int
-}
-
 // Noms des mois du calendrier égyptien (12 mois de 30 jours + le mois épagomène Epagomenai)
 var EgyptianMonthNames = []string{
 	"Thoth",
@@ -32,12 +25,14 @@ var EgyptianMonthNames = []string{
 	"Epagomenai",
 }
 
-// NewEgyptian crée une nouvelle instance de date égyptienne.
+// Egyptian intègre directement StandardDate
+type Egyptian struct {
+	StandardDate
+}
+
 func NewEgyptian(year int64, month int, day int) Egyptian {
 	return Egyptian{
-		Year:  year,
-		Month: month,
-		Day:   day,
+		StandardDate: StandardDate{Year: year, Month: month, Day: day},
 	}
 }
 
@@ -75,12 +70,10 @@ func EgyptianFromFixed(rd int64) Egyptian {
 	days := rd - EgyptianEpoch
 	year := 1 + Quotient(days, 365)
 	month := int(1 + Quotient(Mod(days, 365), 30))
-	day := int(days - 365*(year-1) - 30*int64(month-1) + 1)
+	day := int(Mod(days-365*(year-1)-30*int64(month-1), 30) + 1)
 
 	return Egyptian{
-		Year:  year,
-		Month: month,
-		Day:   day,
+		StandardDate: StandardDate{Year: year, Month: month, Day: day},
 	}
 }
 

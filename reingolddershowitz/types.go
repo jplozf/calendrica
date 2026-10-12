@@ -88,14 +88,6 @@ type Date struct {
 	Day   int
 }
 
-// Location représente une géolocalisation pour les calculs astronomiques
-type Location struct {
-	Name      string
-	Latitude  float64
-	Longitude float64
-	Elevation float64
-}
-
 var Jerusalem = Location{
 	Name:      "Jerusalem",
 	Latitude:  31.778,
